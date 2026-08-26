@@ -6,7 +6,6 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const authRoutes = require("./routes/authRoutes");
-const taskRoutes = require("./routes/taskRoutes");
 
 const app = express();
 
@@ -20,19 +19,25 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
-app.use("/api/tasks", taskRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000;
 
 mongoose
     .connect(process.env.MONGO_URI)
     .then(() => {
         console.log("MongoDB connected successfully");
 
-        app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
+        app.listen(PORT, "0.0.0.0", () => {
+            console.log(
+                `Server running on 0.0.0.0:${PORT}`
+            );
         });
     })
     .catch((error) => {
-        console.error("MongoDB connection failed:", error.message);
+        console.error(
+            "MongoDB connection failed:",
+            error.message
+        );
+
+        process.exit(1);
     });
