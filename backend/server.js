@@ -10,6 +10,16 @@ const authRoutes = require("./routes/authRoutes");
 const app = express();
 
 app.use(cors());
+app.use(
+    cors({
+        origin: [
+            "http://localhost:5173",
+            "https://www.thiranex.in",
+            "https://thiranex.in"
+        ],
+        credentials: true
+    })
+);
 app.use(express.json());
 
 app.get("/", (req, res) => {
